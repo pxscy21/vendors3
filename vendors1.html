@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pxscy Resells</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111;
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: #1f1f1f;
+      border-bottom: 2px solid #e91e63;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8em;
+      color: #e91e63;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #ccc;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 15px rgba(233, 30, 99, 0.4);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card h3 {
+      margin: 15px 0 5px;
+      font-size: 1.2em;
+      color: #fff;
+    }
+
+    .card p {
+      margin: 5px 0 10px;
+      color: #ccc;
+      font-size: 0.95em;
+    }
+
+    .card .delivery {
+      font-size: 0.85em;
+      color: #9effa8;
+      margin-bottom: 5px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .buttons a {
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .buttons a:hover {
+      background-color: #c2185b;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1f1f1f;
+      color: #ccc;
+    }
+
+    footer a {
+      color: #e91e63;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .insta-icon {
+      vertical-align: middle;
+      width: 18px;
+      margin-right: 6px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.75);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 0 10px rgba(233, 30, 99, 0.6);
+      text-align: left;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #e91e63;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      color: #e91e63;
+    }
+
+    .vendor-selection {
+      background-color: #111;
+      padding: 16px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    }
+
+    .vendor-selection label, .vendor-selection select, .vendor-selection p, .vendor-selection h3 {
+      color: white;
+    }
+
+    .vendor-selection select {
+      padding: 8px;
+      margin-top: 8px;
+      border-radius: 5px;
+      background: #222;
+      color: white;
+      border: 1px solid #555;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Pxscy Resells</h1>
+  <p>Exclusive Vendor Bundles – Instant Access</p>
+</header>
+
+<div class="grid" id="products"></div>
+
+<div class="vendor-selection">
+  <h3>Select Vendor</h3>
+  <p>
+    After sending payment via <strong>PayPal</strong> or <strong>Cash App</strong>, please include the <strong>vendor name</strong> (e.g., "Sp5der", "AirPods Max", "Phone Vendor") in the notes or send a DM to <strong>@pxscy_.resells</strong> with your selection.
+  </p>
+  <label for="vendorDropdown">Choose your vendor:</label>
+  <select id="vendorDropdown">
+    <option value="">-- Select Vendor --</option>
+    <option>Sp5der</option>
+    <option>AirPods</option>
+    <option>AirPods Max</option>
+    <option>Labubu</option>
+    <option>Cologne</option>
+    <option>Watch Vendor</option>
+    <option>Phone Vendor</option>
+    <option>All Vendors Bundle</option>
+  </select>
+</div>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalDescription"></p>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <img class="insta-icon" src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram Icon">
+    <a href="https://instagram.com/pxscy_.resells" target="_blank">@pxscy_.resells</a>
+  </p>
+</footer>
+
+<script>
+  const products = [
+    { name: "Sp5der Vendor", image: "https://image.goat.com/transform/v1/attachments/product_template_additional_pictures/images/091/128/523/original/814506_01.jpg.jpeg?action=crop&width=2400", price: "$10", description: "Top-tier Sp5der drops with great resale value." },
+    { name: "AirPods Vendor", image: "https://computercity.com/wp-content/uploads/airpods-pro-2.jpg", price: "$10", description: "High-quality AirPods that look and sound like the originals." },
+    { name: "AirPods Max Vendor", image: "https://www.bhphotovideo.com/images/images2500x2500/apple_mgyj3am_a_airpods_max_silver_1610234.jpg", price: "$10", description: "Access high-quality AirPods Max replicas from trusted sources." },
+    { name: "Labubu Vendor", image: "https://wallpaperaccess.com/full/13541698.jpg", price: "$10", description: "Connect with reliable Labubu suppliers for exclusive box drops." },
+    { name: "Cologne Vendor", image: "https://robbreport.com/wp-content/uploads/2022/11/Best_Fragrances_sauvage.jpg?w=1000", price: "$10", description: "Best-selling men’s fragrances at unbeatable bulk prices." },
+    { name: "Watch Vendor", image: "https://cdn11.bigcommerce.com/s-cj6iyrkgy2/images/stencil/1280x1280/products/473/8978/audemars-piguet-high-quality-replica-fully-iced-out-moissanite-audemars-piguet-cold-royal-oak-watch__03905.1675485700.jpg?c=1", price: "$15", description: "Find premium watch replicas with quality finishing and packaging." },
+    { name: "IPhone Vendor", image: "https://i5.walmartimages.com/asr/8a541153-3bed-47e7-b044-25d7438c354d.d0bd8344c8ef8957a9b5f2b087460301.jpeg", price: "$15", description: "Get connected with vendors selling affordable unlocked phones IPhone 15." },
+    { name: "All Vendors Bundle", image: "https://th.bing.com/th/id/R.58abd4fafee8fed7c9c036e1e20afe7a?rik=MjPjGeOzf9Ub1g&riu=http%3a%2f%2fflippavendors.com%2fcdn%2fshop%2ffiles%2fMASTERVENDORPIC_10.png%3fv%3d1739636536&ehk=I%2fg31%2fDHCfvnTNOjig%2bREc96x3rTV3GbS%2b1f2z4YywY%3d&risl=&pid=ImgRaw&r=0", price: "$30", description: "Get access to all vendor contacts in one discounted bundle." },
+  ];
+
+  const grid = document.getElementById("products");
+  products.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-description", product.description);
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name}" />
+      <h3>${product.name}</h3>
+      <p class="delivery">📥 Instant Delivery via DM</p>
+      <p><strong>Price: ${product.price}</strong></p>
+      <p>Access to ${product.name} Source</p>
+      <div class="buttons">
+        <a href="https://paypal.me/brownlandon897" target="_blank">PayPal</a>
+        <a href="https://cash.app/$landon44566" target="_blank">Cash App</a>
+      </div>
+    `;
+    card.addEventListener("click", () => openModal(product.name, product.description));
+    grid.appendChild(card);
+  });
+
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDescription = document.getElementById("modalDescription");
+
+  function openModal(title, description) {
+    modalTitle.innerText = title;
+    modalDescription.innerText = description;
+    modal.style.display = "flex";
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+</script>
+
+</body>
+</html>
